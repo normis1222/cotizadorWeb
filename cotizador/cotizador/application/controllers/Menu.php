@@ -44,25 +44,52 @@ class Menu extends CI_Controller {
             $crud = new grocery_CRUD();
 
             $crud->set_table('clientes');
-            $crud->columns('idCliente','escuela','cct','Profesor','modalidad','municipio','colonia','calle','numero');
+            $crud->columns('escuela','cct','Profesor','modalidad','municipio','colonia','calle','numero');
             $crud->display_as('idMunicipio','municipio');
+            $crud->display_as('idModalidad','modalidad');
+            $crud->display_as('idColonia','colonia');
+            $crud->display_as('idCalle','calle');
             $crud->set_subject('clientes');
+          $crud->set_relation('idModalidad','modalidad','modalidad');
           $crud->set_relation('idMunicipio','municipio','NomMunicipio');
+          $crud->set_relation('idColonia','colonia','colonia');
+          $crud->set_relation('idCalle','calle','nombreCalle');
+           $crud->required_fields('escuela','cct','idMunicipio','idColonia');
+           
 
             $output = $crud->render();
 
             $this->_menu_output($output);
 	}
-        public function productos()
+       public function proveedores()
+	{
+            $crud = new grocery_CRUD();
+
+            $crud->set_table('proveedor');
+            $crud->columns('nomProveedor','idCompania','numTelefono','email');
+            $crud->display_as('idCompania','compania');
+            $crud->set_subject('proveedor');
+          $crud->set_relation('idCompania','compania','nombreCompania');
+           $crud->required_fields('nomProveedor','idCompania','numTelefono','email');
+           
+
+            $output = $crud->render();
+
+            $this->_menu_output($output);
+	}
+        public function compania()
         {
             $crud = new grocery_CRUD();
 
-            $crud->set_table('producto');
-            $crud->columns('nombre','idunidad','precio','iva');
-            $crud->display_as('idunidad','Unidad');
-            $crud->set_subject('Producto');
-            $crud->set_relation('idunidad','cat_unidad','descripcion');
-            $crud->required_fields('nombre','Unidad','iva','precio');
+            $crud->set_table('compania');
+            $crud->columns('nombreCompania','idMunicipio','idColonia','idCalle','numero');
+            $crud->display_as('idMunicipio','municipio');
+            $crud->display_as('idColonia','colonia');
+            $crud->display_as('idCalle','calle');
+            $crud->set_subject('compania');
+            $crud->set_relation('idMunicipio','municipio','NomMunicipio');
+            $crud->set_relation('idColonia','colonia','colonia');
+            $crud->set_relation('idCalle','calle','nombreCalle');
             
             
 
