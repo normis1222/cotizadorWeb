@@ -44,12 +44,12 @@ class Menu extends CI_Controller {
             $crud = new grocery_CRUD();
 
             $crud->set_table('clientes');
-            $crud->columns('escuela','cct','Profesor','modalidad','municipio','colonia','calle','numero');
+            $crud->columns('escuela','cct','Profesor','idModalidad','idMunicipio','idColonia','idCalle','numero');
             $crud->display_as('idMunicipio','municipio');
             $crud->display_as('idModalidad','modalidad');
             $crud->display_as('idColonia','colonia');
             $crud->display_as('idCalle','calle');
-            $crud->set_subject('clientes');
+            $crud->set_subject('Clientes');
           $crud->set_relation('idModalidad','modalidad','modalidad');
           $crud->set_relation('idMunicipio','municipio','NomMunicipio');
           $crud->set_relation('idColonia','colonia','colonia');
@@ -185,5 +185,22 @@ class Menu extends CI_Controller {
 
             $this->_menu_output($output);
         }
-        
+        public function productos()
+        {
+            $crud = new grocery_CRUD();
+
+            $crud->set_table('producto');
+            $crud->columns('nombre','idunidad','precio','iva');
+            $crud->display_as('idunidad','Unidad');
+            $crud->set_subject('Producto');
+            $crud->set_relation('idunidad','cat_unidad','descripcion');
+            $crud->required_fields('nombre','Unidad','iva','precio');
+            
+            
+
+            $output = $crud->render();
+
+            $this->_menu_output($output);
+        }
+
 }
