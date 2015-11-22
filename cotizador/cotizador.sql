@@ -1,9 +1,9 @@
-﻿-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 4.2.11
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-10-2015 a las 00:33:05
+-- Tiempo de generación: 22-11-2015 a las 18:10:03
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.5.19
 
@@ -95,7 +95,15 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `idColonia` int(11) NOT NULL,
   `idCalle` int(11) NOT NULL,
   `numero` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`idCliente`, `escuela`, `cct`, `idModalidad`, `Profesor`, `idMunicipio`, `idColonia`, `idCalle`, `numero`) VALUES
+(1, 'Miguel Hidalgo', '17', 1, 'Enrique ', 1, 1, 1, 23),
+(2, 'Igancio Zaragoza', '135', 1, 'Ricardo', 1, 2, 1, 12);
 
 -- --------------------------------------------------------
 
@@ -137,6 +145,24 @@ CREATE TABLE IF NOT EXISTS `compania` (
 
 INSERT INTO `compania` (`idCompania`, `nombreCompania`, `idMunicipio`, `idColonia`, `idCalle`, `numero`) VALUES
 (1, 'Tony', 2, 1, 1, 405);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `cotizacion`
+--
+
+CREATE TABLE IF NOT EXISTS `cotizacion` (
+`folio` int(11) NOT NULL,
+  `Fecha` date NOT NULL,
+  `idCliente` int(11) NOT NULL,
+  `idproducto` int(11) NOT NULL,
+  `precio` float NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `subTotal` float NOT NULL,
+  `total` float NOT NULL,
+  `iva` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -198,6 +224,35 @@ INSERT INTO `municipio` (`idMunicipio`, `NomMunicipio`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `ordenes`
+--
+
+CREATE TABLE IF NOT EXISTS `ordenes` (
+`folio` int(11) NOT NULL,
+  `fecha` date NOT NULL,
+  `idCliente` int(11) NOT NULL,
+  `idproducto` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio` int(11) NOT NULL,
+  `iva` int(11) NOT NULL,
+  `subTotal` int(11) NOT NULL,
+  `total` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `ordenes`
+--
+
+INSERT INTO `ordenes` (`folio`, `fecha`, `idCliente`, `idproducto`, `cantidad`, `precio`, `iva`, `subTotal`, `total`) VALUES
+(1, '2015-11-07', 1, 3, 2, 3, 2, 0, 0),
+(2, '2015-11-21', 1, 4, 23, 3, 2, 0, 0),
+(3, '2015-11-21', 2, 3, 4, 3, 2, 0, 0),
+(4, '2015-11-19', 2, 3, 7, 4, 1, 0, 0),
+(5, '2015-11-19', 2, 3, 6, 4, 8, 0, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `producto`
 --
 
@@ -230,7 +285,15 @@ CREATE TABLE IF NOT EXISTS `proveedor` (
   `idCompania` int(11) NOT NULL,
   `numTelefono` int(11) NOT NULL,
   `email` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`idProveedor`, `nomProveedor`, `idCompania`, `numTelefono`, `email`) VALUES
+(1, 'Patito', 1, 2535, 'tony@gmail.com'),
+(2, 'Juan', 1, 676678, 'tony@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -296,6 +359,12 @@ ALTER TABLE `compania`
  ADD PRIMARY KEY (`idCompania`);
 
 --
+-- Indices de la tabla `cotizacion`
+--
+ALTER TABLE `cotizacion`
+ ADD PRIMARY KEY (`folio`);
+
+--
 -- Indices de la tabla `escuela`
 --
 ALTER TABLE `escuela`
@@ -312,6 +381,12 @@ ALTER TABLE `modalidad`
 --
 ALTER TABLE `municipio`
  ADD PRIMARY KEY (`idMunicipio`);
+
+--
+-- Indices de la tabla `ordenes`
+--
+ALTER TABLE `ordenes`
+ ADD PRIMARY KEY (`folio`);
 
 --
 -- Indices de la tabla `producto`
@@ -349,12 +424,22 @@ MODIFY `idunidad` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `compania`
 --
 ALTER TABLE `compania`
 MODIFY `idCompania` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT de la tabla `cotizacion`
+--
+ALTER TABLE `cotizacion`
+MODIFY `folio` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `ordenes`
+--
+ALTER TABLE `ordenes`
+MODIFY `folio` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
@@ -364,7 +449,7 @@ MODIFY `idproducto` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 -- AUTO_INCREMENT de la tabla `proveedor`
 --
 ALTER TABLE `proveedor`
-MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `idProveedor` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --

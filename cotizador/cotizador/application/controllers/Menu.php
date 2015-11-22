@@ -202,5 +202,54 @@ class Menu extends CI_Controller {
 
             $this->_menu_output($output);
         }
+ public function cotizaciones()
+        {
+            $crud = new grocery_CRUD();
 
+            $crud->set_table('cotizacion');
+            $crud->columns('Fecha','cliente','idproducto','cantidad','precio','iva','subTotal','total');
+            $crud->display_as('idCliente','Cliente');
+            $crud->display_as('idproducto','Producto');
+            $crud->set_subject('cotizacion');
+            $crud->set_relation('idCliente','clientes','escuela');
+            $crud->set_relation('idproducto','producto','nombre');
+            $crud->set_relation('precio','producto','precio');
+            $crud->required_fields('idCliente','idproducto','iva','precio');
+            
+            
+
+            $output = $crud->render();
+
+            $this->_menu_output($output);
+        }
+        public function ordenes()
+        {
+            $crud = new grocery_CRUD();
+
+            $crud->set_table('ordenes');
+            $crud->columns('Fecha','idCliente','idproducto','cantidad','precio','iva','subTotal','total');
+            $crud->display_as('idCliente','cliente');
+            $crud->display_as('idproducto','producto');
+            $crud->set_subject('ordenes');
+            $crud->set_relation('idCliente','clientes','escuela');
+            $crud->set_relation('idproducto','producto','nombre');
+            $crud->set_relation('precio','producto','precio');
+            $crud->required_fields('idCliente','idproducto','iva','precio');
+            
+            $crud->callback_add_field('cantidad',array($this,'add_field_callback_1'));
+            //$crud->callback_add_field('GANANCIA',array($this,'add_field_callback_2'));
+            //$crud->callback_add_field('PRECIO_NETO',array($this,'add_field_callback_3'));
+           // $crud->callback_add_field('IVA',array($this,'add_field_callback_4'));
+            //$crud->callback_add_field('TOTAL',array($this,'add_field_callback_5'));     
+            
+
+            $output = $crud->render();
+
+            $this->_menu_output($output);
+            
+        }
+        function add_field_callback_1() //PRECIO COMPRA
+{
+    return  ' <input name="cantidad" type="text"value="ilkunybtght" class="form-control">';
+}
 }
